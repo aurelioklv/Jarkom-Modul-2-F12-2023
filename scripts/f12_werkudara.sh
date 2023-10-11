@@ -6,8 +6,6 @@ echo "Updating resolv.conf..."
 cat <<EOF > /etc/resolv.conf
 options rotate
 nameserver 192.122.1.1
-nameserver 192.227.2.3  # IP YudhistiraDNSMaster
-nameserver 192.227.2.2  # IP WerkudaraDNSSlave
 EOF
 
 if [ $? -eq 0 ]; then
@@ -17,15 +15,15 @@ else
   exit 1
 fi
 
-# Install Lynx using apt-get
-echo "Installing Lynx..."
+# Install Bind9 using apt-get
+echo "Installing Bind9..."
 
 apt-get update
-apt-get install -y lynx
+apt-get install -y bind9
 
 if [ $? -eq 0 ]; then
-  echo "Lynx installed successfully."
+  echo "Bind9 installed successfully."
 else
-  echo "Error installing Lynx."
+  echo "Error installing Bind9."
   exit 1
 fi
