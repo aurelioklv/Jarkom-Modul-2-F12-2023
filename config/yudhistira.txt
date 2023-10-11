@@ -1,0 +1,46 @@
+# /etc/bind/named.conf.local
+zone "arjuna.f12.com" {
+        type master;
+        file "/etc/bind/arjuna.f12/arjuna.f12.com";
+};
+
+zone "abimanyu.f12.com" {
+        type master;
+        file "/etc/bind/abimanyu.f12/abimanyu.f12.com";
+};
+
+
+# /etc/bind/arjuna.f12/arjuna.f12.com
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     arjuna.f12.com. root.arjuna.f12.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN	NS	arjuna.f12.com.
+@	IN	A	192.227.1.4
+www	IN	CNAME	arjuna.f12.com.
+@	IN	AAAA	::1
+
+# /etc/bind/abimanyu.f12/abimanyu.f12.com
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     abimanyu.f12.com.       root.abimanyu.f12.com. (
+                              2                 ; Serial
+                         604800                 ; Refresh
+                          86400                 ; Retry
+                        2419200                 ; Expire
+                         604800 )               ; Negative Cache TTL
+;
+
+@		IN	NS	abimanyu.f12.com.
+@		IN	A	192.227.3.3
+parikesit	IN	CNAME	abimanyu.f12.com.
+@		IN	AAAA	::1
