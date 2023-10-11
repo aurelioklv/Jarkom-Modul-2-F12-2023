@@ -1,0 +1,6 @@
+# /etc/bind/named.conf.local
+zone "arjuna.f12.com" {
+        type slave;
+        masters { 192.227.2.3; };
+        file "/var/lib/bind/arjuna.f12.com";
+};
