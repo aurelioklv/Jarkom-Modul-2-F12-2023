@@ -14,16 +14,3 @@ else
   echo "Error updating resolv.conf."
   exit 1
 fi
-
-# Install Lynx using apt-get
-echo "Installing Lynx..."
-
-apt-get update
-apt-get install -y lynx
-
-if [ $? -eq 0 ]; then
-  echo "Lynx installed successfully."
-else
-  echo "Error installing Lynx."
-  exit 1
-fi
