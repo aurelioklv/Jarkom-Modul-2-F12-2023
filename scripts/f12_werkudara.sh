@@ -61,6 +61,11 @@ zone "arjuna.f12.com" {
         masters { 192.227.2.3; };
         file "/var/lib/bind/arjuna.f12.com";
 };
+
+zone "baratayuda.abimanyu.f12.com" {
+        type master;
+        file "/etc/bind/baratayuda/abimanyu.f12.com";
+};
 EOF
 
 if [ $? -eq 0 ]; then
@@ -69,6 +74,65 @@ else
   echo -e "${BG_RED}Error updating /etc/bind/named.conf.local${RESET}"
   exit 1
 fi
+
+# Making directories
+echo -e "${BG_BLUE}Configuring files ...${RESET}"
+directories=("baratayuda")
+base_directory="/etc/bind"
+
+for dir in "${directories[@]}"; do
+    mkdir "$base_directory/$dir"
+    if [ -d "$base_directory/$dir" ]; then
+        echo -e "${BG_GREEN}Directory '$base_directory/$dir' created successfully.${RESET}"
+    else
+        echo -e "${BG_RED}Failed to create directory '$base_directory/$dir'.${RESET}"
+    fi
+done
+
+# Making config file
+
+# baratayuda.abimanyu.f12.com
+echo -e "${BG_BLUE}Configuring '/etc/bind/baratayuda/abimanyu.f12.com' ...${RESET}"
+if [ -d "/etc/bind/baratayuda" ]; then
+  cat <<EOF > /etc/bind/baratayuda/abimanyu.f12.com
+;
+; BIND data file for local loopback interface
+;
+\$TTL    604800
+@       IN      SOA     baratayuda.abimanyu.f12.com. root.baratayuda.abimanyu.f12.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN	NS	baratayuda.abimanyu.f12.com.
+@	IN	A	192.227.3.3
+www	IN	CNAME	baratayuda.abimanyu.f12.com.
+rjp     IN      A       192.227.3.3
+www.rjp IN      CNAME   rjp.baratayuda.abimanyu.f12.com.
+@	IN	AAAA	::1
+EOF
+  echo -e "${BG_GREEN}File '/etc/bind/baratayuda/abimanyu.f12.com' successfully configured.${RESET}"
+else
+  echo -e "${BG_RED}Directory '/etc/bind/baratayuda' does not exist. Please create it first.${RESET}"
+fi
+
+
+# Editing /etc/bind/named.conf.options
+echo -e "${BG_BLUE}Editing /etc/bind/named.conf.options ...${RESET}"
+file="/etc/bind/named.conf.options"
+keyword="dnssec-validation"
+
+# Use sed to comment lines with // right before the keyword
+sed -i "/$keyword/s|^\(.*[^/]\)$keyword|\1//$keyword|" "$file"
+
+# Check if "allow-query" line is already present
+if ! grep -q "allow-query { any; };" "$file"; then
+    sed -i "/$keyword/a allow-query { any; };" "$file"
+fi
+echo -e "${BG_GREEN}Done editing /etc/bind/named.conf.options${RESET}"
+
 
 # Restart Bind9
 echo -e "${BG_CYAN}Restarting Bind9.${RESET}"

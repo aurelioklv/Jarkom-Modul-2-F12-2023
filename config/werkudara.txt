@@ -4,3 +4,27 @@ zone "arjuna.f12.com" {
         masters { 192.227.2.3; };
         file "/var/lib/bind/arjuna.f12.com";
 };
+
+zone "baratayuda.abimanyu.f12.com" {
+        type master;
+        file "/etc/bind/baratayuda/abimanyu.f12.com";
+};
+
+# /etc/bind/baratayuda/abimanyu.f12.com
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     baratayuda.abimanyu.f12.com. root.baratayuda.abimanyu.f12.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN	NS	baratayuda.abimanyu.f12.com.
+@	IN	A	192.227.3.3
+www	IN	CNAME	baratayuda.abimanyu.f12.com.
+rjp     IN      A       192.227.3.3
+www.rjp IN      CNAME   rjp.baratayuda.abimanyu.f12.com.
+@	IN	AAAA	::1

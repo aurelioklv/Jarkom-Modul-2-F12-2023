@@ -66,6 +66,7 @@ zone "arjuna.f12.com" {
 
 zone "abimanyu.f12.com" {
         type master;
+        allow-transfer { 192.227.3.3; };
         file "/etc/bind/abimanyu.f12/abimanyu.f12.com";
 };
 EOF
@@ -135,13 +136,31 @@ if [ -d "/etc/bind/abimanyu.f12" ]; then
 ;
 @		IN	NS	abimanyu.f12.com.
 @		IN	A	192.227.3.3
-parikesit	IN	CNAME	abimanyu.f12.com.
+parikesit	IN	A	192.227.3.3
+ns1             IN	A	192.227.3.3
+baratayuda      IN      NS      ns1
 @		IN	AAAA	::1
 EOF
   echo -e "${BG_GREEN}File '/etc/bind/abimanyu.f12/abimanyu.f12.com' successfully configured.${RESET}"
 else
   echo -e "${BG_RED}Directory '/etc/bind/abimanyu.f12' does not exist. Please create it first.${RESET}"
 fi
+
+
+# Editing /etc/bind/named.conf.options
+echo -e "${BG_BLUE}Editing /etc/bind/named.conf.options ...${RESET}"
+file="/etc/bind/named.conf.options"
+keyword="dnssec-validation"
+
+# Use sed to comment lines with // right before the keyword
+sed -i "/$keyword/s|^\(.*[^/]\)$keyword|\1//$keyword|" "$file"
+
+# Check if "allow-query" line is already present
+if ! grep -q "allow-query { any; };" "$file"; then
+    sed -i "/$keyword/a allow-query { any; };" "$file"
+fi
+echo -e "${BG_GREEN}Done editing /etc/bind/named.conf.options${RESET}"
+
 
 # Restart Bind9
 echo -e "${BG_CYAN}Restarting Bind9.${RESET}"
