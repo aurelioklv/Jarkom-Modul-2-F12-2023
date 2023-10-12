@@ -69,6 +69,11 @@ zone "abimanyu.f12.com" {
         allow-transfer { 192.227.3.3; };
         file "/etc/bind/abimanyu.f12/abimanyu.f12.com";
 };
+
+zone "3.227.192.in-addr.arpa" {
+        type master;
+        file "/etc/bind/abimanyu.f12/3.227.192.in-addr.arpa";
+};
 EOF
 
 if [ $? -eq 0 ]; then
@@ -145,6 +150,31 @@ EOF
 else
   echo -e "${BG_RED}Directory '/etc/bind/abimanyu.f12' does not exist. Please create it first.${RESET}"
 fi
+
+
+# abimanyu.f12.com (Reverse)
+echo -e "${BG_BLUE}Configuring '/etc/bind/abimanyu.f12/3.227.192.in-addr.arpa' ...${RESET}"
+if [ -d "/etc/bind/abimanyu.f12" ]; then
+  cat <<EOF > /etc/bind/abimanyu.f12/3.227.192.in-addr.arpa
+;
+; BIND data file for local loopback interface
+;
+\$TTL    604800
+@       IN      SOA     abimanyu.f12.com.       root.abimanyu.f12.com. (
+                              2                 ; Serial
+                         604800                 ; Refresh
+                          86400                 ; Retry
+                        2419200                 ; Expire
+                         604800 )               ; Negative Cache TTL
+;
+3.227.192.in-addr.arpa. IN      NS      abimanyu.f12.com.
+3                       IN      PTR     abimanyu.f12.com.
+EOF
+  echo -e "${BG_GREEN}File '/etc/bind/abimanyu.f12/abimanyu.f12.com' successfully configured.${RESET}"
+else
+  echo -e "${BG_RED}Directory '/etc/bind/abimanyu.f12' does not exist. Please create it first.${RESET}"
+fi
+
 
 
 # Editing /etc/bind/named.conf.options
