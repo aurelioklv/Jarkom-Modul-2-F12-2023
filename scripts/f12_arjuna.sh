@@ -75,3 +75,9 @@ server {
 EOF
 echo -e "${BG_GREEN}File '/etc/nginx/conf.d/load-balancer.conf' successfully configured.${RESET}"
 
+
+# Restart Nginx
+echo -e "${BG_CYAN}Restarting Nginx.${RESET}"
+service nginx restart
+
+echo -e "${BG_MAGENTA}DONE${RESET}"

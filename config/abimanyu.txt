@@ -1,0 +1,9 @@
+# /etc/nginx/sites-available/arjuna.f12.com
+server {
+    listen 8002;
+    server_name arjuna.f12.com;
+    location / {
+        root /var/www/arjuna.f12;
+        index index.html;
+    }
+}

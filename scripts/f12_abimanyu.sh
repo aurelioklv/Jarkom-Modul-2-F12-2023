@@ -45,7 +45,7 @@ fi
 echo -e "${BG_BLUE}Installing requirements...${RESET}"
 
 apt-get update
-apt-get install -y apache2 php libapache2-mod-php7.0 wget unzip
+apt-get install -y apache2 nginx php libapache2-mod-php7.0 wget unzip
 
 if [ $? -eq 0 ]; then
   echo -e "${BG_GREEN}Requirements installed successfully.${RESET}"
@@ -53,6 +53,28 @@ else
   echo -e "${BG_RED}Error installing requirements.${RESET}"
   exit 1
 fi
+
+
+# Configure /etc/nginx/sites-available/
+echo -e "${BG_BLUE}Configuring /etc/nginx/sites-available/...${RESET}"
+
+cat <<EOF > /etc/nginx/sites-available/arjuna.f12.com
+server {
+    listen 8002;
+    server_name arjuna.f12.com;
+    location / {
+        root /var/www/arjuna.f12;
+        index index.html;
+    }
+}
+EOF
+
+mkdir /var/www/arjuna.f12
+
+cat <<EOF > /var/www/arjuna.f12/index.html
+Ini adalah Abimanyu
+EOF
+echo -e "${BG_GREEN}Success configuring arjuna.f12 in /etc/nginx/sites-available/...${RESET}"
 
 
 # Configure DocumentRoot to /var/www/abimanyu.f12
@@ -70,12 +92,16 @@ echo -e "${BG_GREEN}Download successful ...${RESET}"
 echo -e "${BG_BLUE}Unpacking resources...${RESET}"
 unzip /var/www/abimanyu.f12.com.zip -d /var/www/
 mv /var/www/abimanyu.yyy.com /var/www/abimanyu.f12
-rm /var/www/*.zip
+rm /var/www/abimanyu.f12.com.zip
 echo -e "${BG_GREEN}Unpacking successful...${RESET}"
 
 
 # Restart Apache2
 echo -e "${BG_CYAN}Restarting Apache2.${RESET}"
 service apache2 restart
+
+# Restart Nginx
+echo -e "${BG_CYAN}Restarting Nginx.${RESET}"
+service nginx restart
 
 echo -e "${BG_MAGENTA}DONE${RESET}"
