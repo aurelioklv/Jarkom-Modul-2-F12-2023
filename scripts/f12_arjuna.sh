@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # ANSI escape codes for foreground colors
 FG_BLACK="\e[30m"
 FG_RED="\e[31m"
@@ -32,28 +33,33 @@ nameserver 192.122.1.1
 EOF
 
 if [ $? -eq 0 ]; then
-  echo "resolv.conf updated successfully."
+  echo -e "${BG_GREEN}resolv.conf updated successfully.${RESET}"
 else
-  echo "Error updating resolv.conf."
+  echo -e "${BG_RED}Error updating resolv.conf.${RESET}"
   exit 1
 fi
+
+# Install Nginx using apt-get
+echo -e "${BG_BLUE}Installing Nginx...${RESET}"
+
 apt-get update
-apt-get install nginx
+apt-get install -y nginx
 
 if [ $? -eq 0 ]; then
-  echo -e "${BG_GREEN}Bind9 installed successfully.${RESET}"
+  echo -e "${BG_GREEN}Nginx installed successfully.${RESET}"
 else
   echo -e "${BG_RED}Error installing Nginx.${RESET}"
   exit 1
 fi
 
+# Configuring load-balancer.conf
 echo -e "${BG_BLUE}making /etc/nginx/conf.d/load-balancer.conf...${RESET}"
 
 cat <<EOF > /etc/nginx/conf.d/load-balancer.conf
 upstream backend {
     server 192.227.3.2:8001;
     server 192.227.3.3:8002;
-    server192.227.3.4:8003;
+    server 192.227.3.4:8003;
 }
 
 server {
@@ -62,12 +68,10 @@ server {
 
     location / {
         proxy_pass http://backend;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-    }
+        proxy_set_header Host \$host;
+        proxy_set_header X-Real-IP \$remote_addr;
+    }
 }
 EOF
- echo -e "${BG_GREEN}File '/etc/nginx/conf.d/load-balancer.conf' successfully configured.${RESET}"
-else
-  echo -e "${BG_RED}Directory '/etc/nginx/conf.d/load-balancer.conf' does not exist. Please create it first.${RESET}"
-fi
+echo -e "${BG_GREEN}File '/etc/nginx/conf.d/load-balancer.conf' successfully configured.${RESET}"
+
