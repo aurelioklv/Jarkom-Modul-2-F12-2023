@@ -330,7 +330,12 @@ zone "arjuna.f12.com" {
 
 4. Restart **bind9** pada **WerkudaraDNSSlave**
 
-5. Matikan **bind9** pada **YudhistiraDNSMaster** kemudian ping dari Client
+5. Matikan **bind9** pada **YudhistiraDNSMaster** atau nodenya kemudian ping dari Client
+
+<p align="center">
+  <img src="https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/87407047/9e150a8b-7533-477f-a72a-91d09ae41fb5" alt='DNS Slave' />
+</p>
+
 
 ## Soal 7
 > Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
