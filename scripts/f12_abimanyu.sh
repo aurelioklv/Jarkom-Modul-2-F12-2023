@@ -197,6 +197,20 @@ cat <<EOF > /etc/apache2/sites-available/rjp-default.conf
 EOF
 echo -e "${BG_GREEN} Successful configuring /etc/apache2/sites-available/rjp-default.conf ...${RESET}"
 
+
+# alias ip abimanyu
+echo -e "${BG_BLUE} Configuring /etc/apache2/sites-available/ip-default.conf ...${RESET}"
+cat <<EOF > /etc/apache2/sites-available/ip-default.conf
+<VirtualHost *:80>
+        ServerName 192.227.3.3
+        Redirect / http://www.abimanyu.f12.com/
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+</VirtualHost>
+EOF
+echo -e "${BG_GREEN} Successful configuring /etc/apache2/sites-available/ip-default.conf ...${RESET}"
+
+
 # abimanyu.f12
 # Download resources using wget
 echo -e "${BG_BLUE}Downloading resources for abimanyu.f12 ...${RESET}"
@@ -232,6 +246,7 @@ unzip /var/www/rjp.baratayuda.abimanyu.f12.com.zip -d /var/www/
 mv /var/www/rjp.baratayuda.abimanyu.yyy.com /var/www/rjp.baratayuda.abimanyu.f12
 rm /var/www/rjp.baratayuda.abimanyu.f12.com.zip
 echo -e "${BG_GREEN}Unpacking successful...${RESET}"
+
 a2enmod rewrite
 a2ensite parikesit-default.conf
 a2ensite rjp-default.conf
