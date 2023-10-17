@@ -92,7 +92,7 @@ cat <<EOF > /etc/apache2/sites-available/000-default.conf
 
         ServerAdmin webmaster@localhost
         DocumentRoot /var/www/abimanyu.f12
-
+        Alias /home /var/www/abimanyu.f12/index.php/home
         # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
         # error, crit, alert, emerg.
         # It is also possible to configure the loglevel for particular
@@ -101,8 +101,6 @@ cat <<EOF > /etc/apache2/sites-available/000-default.conf
 
         ErrorLog \${APACHE_LOG_DIR}/error.log
         CustomLog \${APACHE_LOG_DIR}/access.log combined
-        ErrorDocument 404 /c403.html
-        ErrorDocument 404 /c404.html
         # For most configuration files from conf-available/, which are
         # enabled or disabled at a global level, it is possible to
         # include a line for only one particular virtual host. For example the
@@ -116,73 +114,6 @@ EOF
 echo -e "${BG_GREEN} Successful configuring /etc/apache2/sites-available/000-default.conf ...${RESET}"
 
 
-# Customizing error page
-echo -e "${BG_BLUE} Customizing error page ...${RESET}"
-touch /var/www/abimanyu.f12/c403.html /var/www/abimanyu.f12/c404.html
-cat <<EOF > /var/www/abimanyu.f12/c403.html
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Error 403 - Forbidden</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        h1 {
-            font-size: 72px;
-            color: #FF0000;
-        }
-        p {
-            font-size: 24px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Error 403, dumbass</h1>
-        <p>Forbidden to enter, need permission. you criminal</p>
-    </div>
-</body>
-</html>
-EOF
-echo -e "${BG_GREEN}c403.html created successfully${RESET}"
-cat <<EOF > /var/www/abimanyu.f12/c404.html
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Error 404 - Page Not Found</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        h1 {
-            font-size: 72px;
-            color: #FF0000;
-        }
-        p {
-            font-size: 24px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Error 404, theres NOTHING</h1>
-        <p>Theres nothing here, youre either an idiot or mentally ill</p>
-    </div>
-</body>
-</html>
-EOF
-echo -e "${BG_GREEN}c404.html created successfully${RESET}"
 
 
 # Configure .htaccess
