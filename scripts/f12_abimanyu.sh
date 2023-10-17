@@ -250,6 +250,7 @@ echo -e "${BG_GREEN}Unpacking successful...${RESET}"
 a2enmod rewrite
 a2ensite parikesit-default.conf
 a2ensite rjp-default.conf
+a2ensite ip-default.conf
 
 # Restart Apache2
 echo -e "${BG_CYAN}Restarting Apache2.${RESET}"
