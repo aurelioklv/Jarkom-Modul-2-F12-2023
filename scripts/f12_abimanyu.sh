@@ -155,8 +155,42 @@ cat <<EOF > /etc/apache2/sites-available/parikesit-default.conf
 
 # vim: syntax=apache ts=4 sw=4 sts=4 sr noet
 EOF
-echo -e "${BG_GREEN} Successful configuring /etc/apache2/sites-available/000-default.conf ...${RESET}"
+echo -e "${BG_GREEN} Successful configuring /etc/apache2/sites-available/parikesit-default.conf ...${RESET}"
 
+
+# rjp.baratayuda.abimanyu.f12
+# Configure DocumentRoot to /var/www/rjp.baratayuda.abimanyu.f12
+echo -e "${BG_BLUE} Configuring /etc/apache2/sites-available/rjp-default.conf ...${RESET}"
+cat <<EOF > /etc/apache2/sites-available/rjp-default.conf
+<VirtualHost *:14000>
+        ServerName rjp.baratayuda.abimanyu.f12.com
+        ServerAlias www.rjp.baratayuda.abimanyu.f12.com
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/rjp.baratayuda.abimanyu.f12
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+        <Directory "/var/www/rjp.baratayuda.abimanyu.f12">
+                AuthType Basic
+                AuthName "Restricted Area"
+                AuthUserFile /etc/apache2/rjp.htpasswd
+                Require valid-user
+        </Directory>
+</VirtualHost>
+<VirtualHost *:14400>
+        ServerName rjp.baratayuda.abimanyu.f12.com
+        ServerAlias www.rjp.baratayuda.abimanyu.f12.com
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/rjp.baratayuda.abimanyu.f12
+        <Directory "/var/www/rjp.baratayuda.abimanyu.f12">
+                AuthType Basic
+                AuthName "Restricted Area"
+                AuthUserFile /etc/apache2/rjp.htpasswd
+                Require valid-user
+        </Directory>
+</VirtualHost>
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+EOF
+echo -e "${BG_GREEN} Successful configuring /etc/apache2/sites-available/rjp-default.conf ...${RESET}"
 
 # abimanyu.f12
 # Download resources using wget
@@ -182,6 +216,20 @@ mv /var/www/parikesit.abimanyu.yyy.com /var/www/parikesit.abimanyu.f12
 rm /var/www/parikesit.abimanyu.f12.com.zip
 echo -e "${BG_GREEN}Unpacking successful...${RESET}"
 
+# rjp.baratayuda.abimanyu.f12
+# Download resources using wget
+echo -e "${BG_BLUE}Downloading resources for rjp.baratayuda.abimanyu.f12 ...${RESET}"
+wget -O '/var/www/rjp.baratayuda.abimanyu.f12.com.zip' 'https://drive.usercontent.google.com/download?id=1pPSP7yIR05JhSFG67RVzgkb-VcW9vQO6' 
+echo -e "${BG_GREEN}Download successful ...${RESET}"
+
+echo -e "${BG_BLUE}Unpacking resources for rjp.baratayuda.abimanyu.f12 ...${RESET}"
+unzip /var/www/rjp.baratayuda.abimanyu.f12.com.zip -d /var/www/
+mv /var/www/rjp.baratayuda.abimanyu.yyy.com /var/www/rjp.baratayuda.abimanyu.f12
+rm /var/www/rjp.baratayuda.abimanyu.f12.com.zip
+echo -e "${BG_GREEN}Unpacking successful...${RESET}"
+
+a2ensite parikesit-default.conf
+a2ensite rjp-default.conf
 
 # Restart Apache2
 echo -e "${BG_CYAN}Restarting Apache2.${RESET}"
