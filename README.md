@@ -412,6 +412,10 @@ ping baratayuda.abimanyu.f12.com
 ping www.baratayuda.abimanyu.f12.com
 ```
 
+<p align="center">
+  <img src="https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/87407047/19e5725c-bf1e-4868-9d48-86e3b6cadfed" alt='Delegasi Subdomain' />
+</p>
+
 ## Soal 8
 > Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.yyy.com dengan alias www.rjp.baratayuda.abimanyu.yyy.com yang mengarah ke Abimanyu.
 
@@ -444,6 +448,10 @@ ping rjp.baratayuda.abimanyu.f12.com
 ping www.rjp.baratayuda.abimanyu.f12.com
 ```
 
+<p align="center">
+  <img src="https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/87407047/b87d6609-76cf-4431-acf2-a8db947816e4" alt='Subdomain rjp' />
+</p>
+
 ## Soal 9
 Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
 1.  download nginx di semua node yang tertulis
@@ -457,11 +465,68 @@ apt-get update nginx
 ![image](https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/114126015/c1bfe2ec-36b0-4e5b-ac17-ad8291132717)
 2. edit config di semua worker sesuai dengan port yang digunakan
 ![image](https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/114126015/ea0823ba-2eba-4a86-80df-b87df427c0cc)
+
+## Soal 11
+> Selain menggunakan Nginx, lakukan konfigurasi Apache Web Server pada worker Abimanyu dengan web server www.abimanyu.yyy.com. Pertama dibutuhkan web server dengan DocumentRoot pada /var/www/abimanyu.yyy
+
+1. Ubah DocumentRoot menjadi `/var/www/abimanyu.f12` pada `/etc/apache2/sites-available/000-default.conf`
+```
+DocumentRoot /var/www/abimanyu.f12
+```
+
+2. Kemudian download resource untuk website, unzip, dan masukkan ke direktori `/var/www/abimanyu.f12`
+```
+wget -O '/var/www/abimanyu.f12.com.zip' 'https://drive.usercontent.google.com/download?id=1a4V23hwK9S7hQEDEcv9FL14UkkrHc-Zc'
+unzip /var/www/abimanyu.f12.com.zip -d /var/www/
+mv /var/www/abimanyu.yyy.com /var/www/abimanyu.f12
+rm /var/www/abimanyu.f12.com.zip
+```
+
+3. Restart **apache2**
+
+4. Lakukan test pada Client dengan menjalankan command berikut
+```
+lynx abimanyu.f12.com
+```
+
+<p align="center">
+  <img src="https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/87407047/2abbeddd-b12e-4d4c-9700-80af845bc73b" alt='Subdomain rjp' />
+</p>
+
 ## Soal 12 
 1 edit 000-default confiq
 ```
 Alias /home /var/www/abimanyu.f12/index.php/home
 ```
+
+## Soal 13
+> Selain itu, pada subdomain www.parikesit.abimanyu.yyy.com, DocumentRoot disimpan pada /var/www/parikesit.abimanyu.yyy
+
+1. Ubah DocumentRoot menjadi `/var/www/parikesit.abimanyu.f12` pada `/etc/apache2/sites-available/000-default.conf`
+```
+DocumentRoot /var/www/abimanyu.f12
+```
+
+2. Kemudian download resource untuk website, unzip, dan masukkan ke direktori `/var/www/abimanyu.f12`
+```
+wget -O '/var/www/abimanyu.f12.com.zip' 'https://drive.usercontent.google.com/download?id=1a4V23hwK9S7hQEDEcv9FL14UkkrHc-Zc'
+unzip /var/www/abimanyu.f12.com.zip -d /var/www/
+mv /var/www/abimanyu.yyy.com /var/www/abimanyu.f12
+rm /var/www/abimanyu.f12.com.zip
+```
+
+3. Restart **apache2**
+
+4. Lakukan test pada Client dengan menjalankan command berikut
+```
+lynx abimanyu.f12.com
+```
+
+<p align="center">
+  <img src="https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/87407047/2abbeddd-b12e-4d4c-9700-80af845bc73b" alt='Subdomain rjp' />
+</p>
+
+
 ## Soal 14
 1. tambah config untuk tiap directory untuk file parikesit
 ![image](https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/114126015/4f48dfea-63d4-491d-a057-14ed9ec09fe2)

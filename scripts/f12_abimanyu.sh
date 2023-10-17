@@ -77,6 +77,7 @@ EOF
 echo -e "${BG_GREEN}Success configuring arjuna.f12 in /etc/nginx/sites-available/...${RESET}"
 
 
+# abimanyu.f12
 # Configure DocumentRoot to /var/www/abimanyu.f12
 echo -e "${BG_BLUE} Configuring /etc/apache2/sites-available/000-default.conf ...${RESET}"
 cat <<EOF > /etc/apache2/sites-available/000-default.conf
@@ -111,30 +112,74 @@ cat <<EOF > /etc/apache2/sites-available/000-default.conf
 
 # vim: syntax=apache ts=4 sw=4 sts=4 sr noet
 EOF
+echo -e "${BG_GREEN} Successful configuring /etc/apache2/sites-available/parikesit-default.conf ...${RESET}"
+
+# parikesit.abimanyu.f12
+# Configure DocumentRoot to /var/www/abimanyu.f12
+echo -e "${BG_BLUE} Configuring /etc/apache2/sites-available/parikesit-default.conf ...${RESET}"
+cat <<EOF > /etc/apache2/sites-available/parikesit-default.conf
+<VirtualHost *:80>
+        # The ServerName directive sets the request scheme, hostname and port that
+        # the server uses to identify itself. This is used when creating
+        # redirection URLs. In the context of virtual hosts, the ServerName
+        # specifies what hostname must appear in the request's Host: header to
+        # match this virtual host. For the default virtual host (this file) this
+        # value is not decisive as it is used as a last resort host regardless.
+        # However, you must set it for any further virtual host explicitly.
+        ServerName parikesit.abimanyu.f12.com
+        ServerAlias www.parikesit.abimanyu.f12.com
+        ServerAdmin webmaster@localhost
+        DocumentRoot /var/www/parikesit.abimanyu.f12
+        <Directory /var/www/parikesit.abimanyu.f12/public>
+                Options +Indexes
+        </Directory>
+        <Directory /var/www/parikesit.abimanyu.f12/secret>
+                Require all denied
+        </Directory>
+        Alias /js /var/www/parikesit.abimanyu.f12/public/js
+        # Available loglevels: trace8, ..., trace1, debug, info, notice, warn,
+        # error, crit, alert, emerg.
+        # It is also possible to configure the loglevel for particular
+        # modules, e.g.
+        #LogLevel info ssl:warn
+
+        ErrorLog \${APACHE_LOG_DIR}/error.log
+        CustomLog \${APACHE_LOG_DIR}/access.log combined
+        # For most configuration files from conf-available/, which are
+        # enabled or disabled at a global level, it is possible to
+        # include a line for only one particular virtual host. For example the
+        # following line enables the CGI configuration for this host only
+        # after it has been globally disabled with "a2disconf".
+        #Include conf-available/serve-cgi-bin.conf
+</VirtualHost>
+
+# vim: syntax=apache ts=4 sw=4 sts=4 sr noet
+EOF
 echo -e "${BG_GREEN} Successful configuring /etc/apache2/sites-available/000-default.conf ...${RESET}"
 
 
-
-
-# Configure .htaccess
-echo -e "${BG_BLUE}Configuring .htaccess on /var/www/abimanyu.f12 ...${RESET}"
-touch /var/www/abimanyu.f12/.htaccess
-cat <<EOF > /var/www/abimanyu.f12/.htaccess
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^([^\.]+)$ $1.php [NC,L]
-EOF
-echo -e "${BG_BLUE}Configuring .htaccess on /var/www/abimanyu.f12 ...${RESET}"
-
+# abimanyu.f12
 # Download resources using wget
-echo -e "${BG_BLUE}Downloading resources...${RESET}"
+echo -e "${BG_BLUE}Downloading resources for abimanyu.f12 ...${RESET}"
 wget -O '/var/www/abimanyu.f12.com.zip' 'https://drive.usercontent.google.com/download?id=1a4V23hwK9S7hQEDEcv9FL14UkkrHc-Zc'
 echo -e "${BG_GREEN}Download successful ...${RESET}"
 
-echo -e "${BG_BLUE}Unpacking resources...${RESET}"
+echo -e "${BG_BLUE}Unpacking resources for abimanyu.f12 ...${RESET}"
 unzip /var/www/abimanyu.f12.com.zip -d /var/www/
 mv /var/www/abimanyu.yyy.com /var/www/abimanyu.f12
 rm /var/www/abimanyu.f12.com.zip
+echo -e "${BG_GREEN}Unpacking successful...${RESET}"
+
+# parikesit.abimanyu.f12
+# Download resources using wget
+echo -e "${BG_BLUE}Downloading resources for parikesit.abimanyu.f12 ...${RESET}"
+wget -O '/var/www/parikesit.abimanyu.f12.com.zip' 'https://drive.usercontent.google.com/download?id=1LdbYntiYVF_NVNgJis1GLCLPEGyIOreS'
+echo -e "${BG_GREEN}Download successful ...${RESET}"
+
+echo -e "${BG_BLUE}Unpacking resources for parikesit.abimanyu.f12 ...${RESET}"
+unzip /var/www/parikesit.abimanyu.f12.com.zip -d /var/www/
+mv /var/www/parikesit.abimanyu.yyy.com /var/www/parikesit.abimanyu.f12
+rm /var/www/parikesit.abimanyu.f12.com.zip
 echo -e "${BG_GREEN}Unpacking successful...${RESET}"
 
 
