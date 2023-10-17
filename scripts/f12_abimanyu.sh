@@ -187,6 +187,8 @@ echo -e "${BG_GREEN}Unpacking successful...${RESET}"
 echo -e "${BG_CYAN}Restarting Apache2.${RESET}"
 service apache2 restart
 
+ln -s /etc/nginx/sites-available/arjuna.f12.com /etc/nginx/sites-enabled
+
 # Restart Nginx
 echo -e "${BG_CYAN}Restarting Nginx.${RESET}"
 service nginx restart

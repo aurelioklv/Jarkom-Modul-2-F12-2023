@@ -76,6 +76,7 @@ Ini adalah Wisanggeni
 EOF
 echo -e "${BG_GREEN}Success configuring arjuna.f12 in /etc/nginx/sites-available/...${RESET}"
 
+ln -s /etc/nginx/sites-available/arjuna.f12.com /etc/nginx/sites-enabled
 
 # Restart Nginx
 echo -e "${BG_CYAN}Restarting Nginx.${RESET}"
