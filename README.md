@@ -443,3 +443,55 @@ www.rjp   IN      CNAME   rjp.baratayuda.abimanyu.f12.com.
 ping rjp.baratayuda.abimanyu.f12.com
 ping www.rjp.baratayuda.abimanyu.f12.com
 ```
+
+## Soal 9
+Arjuna merupakan suatu Load Balancer Nginx dengan tiga worker (yang juga menggunakan nginx sebagai webserver) yaitu Prabakusuma, Abimanyu, dan Wisanggeni. Lakukan deployment pada masing-masing worker.
+1.  download nginx di semua node yang tertulis
+```
+apt-get update nginx
+```
+2.  di arjuna /etc/nginx/conf.d buat configurasi load balancer dan buat arjuna.f12.com di /etc/nginx/sites-available
+3.  lakukan sym link degan ln -s /etc/nginx/sites-available/arjuna.f12.com /etc/nginx/sites-enabled
+## Soal 10
+1. edit config load balancer di arjuna
+![image](https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/114126015/c1bfe2ec-36b0-4e5b-ac17-ad8291132717)
+2. edit config di semua worker sesuai dengan port yang digunakan
+![image](https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/114126015/ea0823ba-2eba-4a86-80df-b87df427c0cc)
+## Soal 12 
+1 edit 000-default confiq
+```
+Alias /home /var/www/abimanyu.f12/index.php/home
+```
+## Soal 14
+1. tambah config untuk tiap directory untuk file parikesit
+![image](https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/114126015/4f48dfea-63d4-491d-a057-14ed9ec09fe2)
+2. restart apache
+## Soal 15 
+1. Edit config parikesit untuk error document
+![image](https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/114126015/fc5694af-af2c-4b3c-9125-887ac1c9e7b3)
+## Soal 16
+1. edit config parikesit
+```
+Alias /js /var/www/parikesit.abimanyu.f12/public/js
+```
+## Soal 17 
+1. Download resource untuk rjp di /var/www dan unzip
+2. Buat config baru di etc/apache2/sites-available
+![image](https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/114126015/f3fc6af5-95f7-4ed7-a2cf-108185e013ae)
+## Soal 18 
+1 buat hatpasswd di /etc/apache2 
+```
+htpasswd -c /etc/apache2/rjp.passwd Wayang
+baratayudaf12
+```
+2. Edit config rjp
+![image](https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/114126015/dd26aeb2-b104-4f6e-a319-08baafaa464a)
+![image](https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/114126015/ea30115f-63cc-4be0-82c1-b1d61db2429a)
+## Soal 19
+1. buat config sites-available baru untuk ip address
+![image](https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/114126015/c85c9d0f-3915-4667-a6b5-98ae6e243f44)
+## Soal 20 
+1. Edit config parikesit untuk rewrite
+![image](https://github.com/aurelioklv/Jarkom-Modul-2-F12-2023/assets/114126015/049c6a96-b69e-40b8-aebc-016ea8395f48)
+2. tambahkan mod rewrite degnan ae2mod rewrite
+3. Restart apache 
