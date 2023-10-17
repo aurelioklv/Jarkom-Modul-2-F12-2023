@@ -353,13 +353,13 @@ $TTL    604800
                         2419200                 ; Expire
                          604800 )               ; Negative Cache TTL
 ;
-@		        IN	    NS	    abimanyu.f12.com.
-@		        IN	    A	      192.227.3.3
+@           IN	    NS      abimanyu.f12.com.
+@           IN	    A       192.227.3.3
 www         IN      CNAME   abimanyu.f12.com.
-parikesit	  IN	    A	      192.227.3.3
-ns1         IN	    A	      192.227.3.3
+parikesit   IN      A       192.227.3.3
+ns1         IN      A       192.227.3.3
 baratayuda  IN      NS      ns1
-@		        IN	    AAAA	  ::1
+@           IN      AAAA    ::1
 ```
 
 2. Comment `dnssec-validation auto` dan tambahkan `allow-query{any;};` di bawahnya pada file `/etc/bind/named.conf.options`
@@ -396,10 +396,10 @@ $TTL    604800
                         2419200         ; Expire
                          604800 )       ; Negative Cache TTL
 ;
-@         IN	    NS	    baratayuda.abimanyu.f12.com.
-@	        IN	    A	      192.227.3.3
-www	      IN      CNAME	  baratayuda.abimanyu.f12.com.
-@	        IN	    AAAA	  ::1
+@         IN      NS      baratayuda.abimanyu.f12.com.
+@         IN      A	      192.227.3.3
+www       IN      CNAME	  baratayuda.abimanyu.f12.com.
+@         IN      AAAA	  ::1
 ```
 
 7. Comment `dnssec-validation auto` dan tambahkan `allow-query{any;};` di bawahnya pada file `/etc/bind/named.conf.options`
@@ -428,12 +428,12 @@ $TTL    604800
                         2419200         ; Expire
                          604800 )       ; Negative Cache TTL
 ;
-@         IN	    NS	    baratayuda.abimanyu.f12.com.
-@	        IN	    A	      192.227.3.3
-www	      IN      CNAME	  baratayuda.abimanyu.f12.com.
+@         IN      NS      baratayuda.abimanyu.f12.com.
+@         IN      A       192.227.3.3
+www       IN      CNAME   baratayuda.abimanyu.f12.com.
 rjp       IN      A       192.227.3.3
 www.rjp   IN      CNAME   rjp.baratayuda.abimanyu.f12.com.
-@	        IN	    AAAA	  ::1
+@         IN      AAAA    ::1
 ```
 
 2. Restart **bind9**
