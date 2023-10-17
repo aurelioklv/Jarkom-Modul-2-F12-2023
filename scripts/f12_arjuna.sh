@@ -67,7 +67,7 @@ server {
     server_name arjuna.f12.com;
 
     location / {
-        proxy_pass http://backend;
+        proxy_pass http://www.arjuna.f12.com;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
     }
