@@ -340,5 +340,106 @@ zone "arjuna.f12.com" {
 ## Soal 7
 > Seperti yang kita tahu karena banyak sekali informasi yang harus diterima, buatlah subdomain khusus untuk perang yaitu baratayuda.abimanyu.yyy.com dengan alias www.baratayuda.abimanyu.yyy.com yang didelegasikan dari Yudhistira ke Werkudara dengan IP menuju ke Abimanyu dalam folder Baratayuda.
 
+1. Untuk menambah subdomain **baratayuda**.abimanyu.yyy.com, tambahkan konfiguarsi pada `/etc/bind9/abimanyu.f12/abimanyu.f12.com`* di **YudhistiraDNSMaster** sehingga hasilnya menjadi seperti berikut
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     abimanyu.f12.com.       root.abimanyu.f12.com. (
+                              2                 ; Serial
+                         604800                 ; Refresh
+                          86400                 ; Retry
+                        2419200                 ; Expire
+                         604800 )               ; Negative Cache TTL
+;
+@		        IN	    NS	    abimanyu.f12.com.
+@		        IN	    A	      192.227.3.3
+www         IN      CNAME   abimanyu.f12.com.
+parikesit	  IN	    A	      192.227.3.3
+ns1         IN	    A	      192.227.3.3
+baratayuda  IN      NS      ns1
+@		        IN	    AAAA	  ::1
+```
+
+2. Comment `dnssec-validation auto` dan tambahkan `allow-query{any;};` di bawahnya pada file `/etc/bind/named.conf.options`
+
+3. Tambahkan `allow-transfer { 192.227.2.2; };` pada zone `abimanyu.f12.com` sehingga hasilnya seperti berikut
+```
+zone "abimanyu.f12.com" {
+        type master;
+        allow-transfer { 192.227.2.2; };
+        file "/etc/bind/abimanyu.f12/abimanyu.f12.com";
+};
+```
+
+4. Restart **bind9** pada **YudhistiraDNSMaster**
+
+5. Pada **WerkudaraDNSSlave**, buat zone baru pada `/etc/bind/named.conf.local`.
+```
+zone "baratayuda.abimanyu.f12.com" {
+        type master;
+        file "/etc/bind/baratayuda/abimanyu.f12.com";
+};
+```
+
+6. Buat direktori `/etc/bind/baratayuda/` kemudian tambahkan konfigurasi di bawah pada file `abimanyu.f12.com` di dalam direktori yang baru saja dibuat
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     baratayuda.abimanyu.f12.com. root.baratayuda.abimanyu.f12.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@         IN	    NS	    baratayuda.abimanyu.f12.com.
+@	        IN	    A	      192.227.3.3
+www	      IN      CNAME	  baratayuda.abimanyu.f12.com.
+@	        IN	    AAAA	  ::1
+```
+
+7. Comment `dnssec-validation auto` dan tambahkan `allow-query{any;};` di bawahnya pada file `/etc/bind/named.conf.options`
+
+8. Restart **bind9** pada **WerkudaraDNSSlave**
+
+9. Lakukan test pada Client dengan menjalankan command berikut
+```
+ping baratayuda.abimanyu.f12.com
+ping www.baratayuda.abimanyu.f12.com
+```
+
 ## Soal 8
 > Untuk informasi yang lebih spesifik mengenai Ranjapan Baratayuda, buatlah subdomain melalui Werkudara dengan akses rjp.baratayuda.abimanyu.yyy.com dengan alias www.rjp.baratayuda.abimanyu.yyy.com yang mengarah ke Abimanyu.
+
+1. Untuk menambah subdomain **rjp**.baratayuda.abimanyu.yyy.com, tambahkan `rjp IN A 192.227.3.3` dan `www.rjp IN CNAME rjp.baratayuda.abimanyu.f12.com.` pada file konfigurasi `/etc/bind/baratayuda/abimanyu.f12.com` di **WerkudaraDNSSlave** sehingga hasilnya menjadi seperti berikut
+```
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     baratayuda.abimanyu.f12.com. root.baratayuda.abimanyu.f12.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@         IN	    NS	    baratayuda.abimanyu.f12.com.
+@	        IN	    A	      192.227.3.3
+www	      IN      CNAME	  baratayuda.abimanyu.f12.com.
+rjp       IN      A       192.227.3.3
+www.rjp   IN      CNAME   rjp.baratayuda.abimanyu.f12.com.
+@	        IN	    AAAA	  ::1
+```
+
+2. Restart **bind9**
+
+3. Lakukan test pada Client dengan menjalankan command berikut
+```
+ping rjp.baratayuda.abimanyu.f12.com
+ping www.rjp.baratayuda.abimanyu.f12.com
+```
